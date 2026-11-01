@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Heartburst</title>
+<style>
+  body { width: 300px; margin: 0; padding: 14px; font: 13px system-ui, sans-serif; background: #121212; color: #eee; }
+  h1 { font-size: 15px; margin: 0 0 10px; }
+  label { display: block; margin: 10px 0 4px; color: #aaa; }
+  textarea, input { width: 100%; box-sizing: border-box; padding: 8px; border-radius: 6px; border: 1px solid #333; background: #1e1e1e; color: #eee; font: inherit; }
+  textarea { height: 80px; resize: vertical; }
+  .row { display: flex; gap: 8px; }
+  .row > div { flex: 1; }
+  button { width: 100%; margin-top: 12px; padding: 10px; border: 0; border-radius: 6px; font-weight: 600; cursor: pointer; }
+  #start { background: #fe2c55; color: #fff; }
+  #stop { background: #333; color: #eee; display: none; }
+  #status { margin-top: 10px; min-height: 16px; color: #25f4ee; }
+  #status.err { color: #ff6b6b; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+  .tabs button { margin: 0; background: #252525; color: #aaa; }
+  .tabs button[aria-selected="true"] { background: #fe2c55; color: #fff; }
+  [hidden] { display: none !important; }
+  .hint { color: #aaa; line-height: 1.5; font-size: 12px; }
+  #emoji-info { color: #25f4ee; }
+</style>
+</head>
+<body>
+  <h1>💗 Heartburst</h1>
+  <div class="tabs" role="tablist" aria-label="Message settings">
+    <button id="message-tab" role="tab" aria-selected="true" aria-controls="message-panel">Message</button>
+    <button id="emoji-tab" role="tab" aria-selected="false" aria-controls="emoji-panel" tabindex="-1">Emojis</button>
+  </div>
+  <div id="message-panel" role="tabpanel" aria-labelledby="message-tab">
+  <label for="msg">1. Message to send</label>
+  <textarea id="msg" placeholder="I love you"></textarea>
+  <div class="row">
+    <div>
+      <label for="count">2. How many (max 100)</label>
+      <input id="count" type="number" min="1" max="100" value="10">
+    </div>
+    <div>
+      <label for="delay">3. Wait (seconds)</label>
+      <input id="delay" type="number" min="1" step="0.5" value="1.5">
+    </div>
+  </div>
+  </div>
+  <div id="emoji-panel" role="tabpanel" aria-labelledby="emoji-tab" hidden>
+    <label for="emojis">Emojis to choose from</label>
+    <textarea id="emojis" placeholder="❤️ 💕 💖 🥰 😘 🌹 ✨"></textarea>
+    <p class="hint">Add at least 3 different emojis. Each message gets 3 randomly chosen emojis added at the end. Paste them together or separate with spaces or new lines. Leave empty to send text only.</p>
+    <p id="emoji-info" class="hint" aria-live="polite"></p>
+    <p class="hint">Your emoji list saves automatically.</p>
+  </div>
+  <button id="start">Start sending</button>
+  <button id="stop">Stop</button>
+  <div id="status" role="status" aria-live="polite"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
